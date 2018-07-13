@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Homework.Models.客戶聯絡人>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>客戶聯絡人</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@using (Html.BeginForm("Search", "客戶聯絡人", FormMethod.Get, null))
+{
+    <div class="form-group">
+        @Html.TextBox("keyword", null, new { placeholder = "請輸入關鍵字" })
+        <input type="submit" />
+    </div>
+    <div class="form-group">
+        @Html.DropDownList("職稱", null, htmlAttributes: new { @class = "form-control", onchange = "this.form.submit();" })
+    </div>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink(Html.DisplayNameFor(model => model.職稱).ToHtmlString(), "Index", new { sortOrder = ViewBag.職稱Sort })
+        </th>
+        <th>
+            @Html.ActionLink(Html.DisplayNameFor(model => model.姓名).ToHtmlString(), "Index", new { sortOrder = ViewBag.姓名Sort })
+        </th>
+        <th>
+            @Html.ActionLink(Html.DisplayNameFor(model => model.Email).ToHtmlString(), "Index", new { sortOrder = ViewBag.EmailSort })
+        </th>
+        <th>
+            @Html.ActionLink(Html.DisplayNameFor(model => model.手機).ToHtmlString(), "Index", new { sortOrder = ViewBag.手機Sort })
+        </th>
+        <th>
+            @Html.ActionLink(Html.DisplayNameFor(model => model.電話).ToHtmlString(), "Index", new { sortOrder = ViewBag.電話Sort })
+        </th>
+        <th>
+            @Html.ActionLink(Html.DisplayNameFor(model => model.客戶資料.客戶名稱).ToHtmlString(), "Index", new { sortOrder = ViewBag.客戶名稱Sort })
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.職稱)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.姓名)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.手機)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.電話)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.客戶資料.客戶名稱)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
