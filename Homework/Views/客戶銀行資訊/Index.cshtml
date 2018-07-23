@@ -9,10 +9,14 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-@using (Html.BeginForm("Search", "Clients", FormMethod.Get, null))
+@using (Html.BeginForm("Search", "客戶銀行資訊", FormMethod.Get, null))
 {
     @Html.TextBox("keyword", null, new { placeholder = "請輸入關鍵字" });
     <input type="submit" />
+}
+@using (Html.BeginForm("Export", "客戶銀行資訊", FormMethod.Post))
+{
+    <input type="submit" value="Export" />
 }
 <table class="table">
     <tr>

@@ -13,15 +13,15 @@
         <dt>
             @Html.DisplayNameFor(model => model.客戶名稱)
         </dt>
-        <dt>
-            @Html.DisplayNameFor(model => model.客戶類別.客戶分類)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.客戶類別.客戶分類)
-        </dd>
         <dd>
             @Html.DisplayFor(model => model.客戶名稱)
+        </dd>
+
+        <dt>
+            @Html.DisplayFor(model => model.客戶類別.客戶分類)
+        </dt>
+        <dd>
+            @Html.DisplayNameFor(model => model.客戶類別.客戶分類)
         </dd>
 
         <dt>
@@ -66,6 +66,9 @@
 
     </dl>
 </div>
+<h3>客戶聯絡人</h3>
+@*@Html.Action("Details_聯絡人清單", new { id = Model.Id })*@
+@Html.Partial("Details_聯絡人清單", Model.客戶聯絡人.ToList())
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")

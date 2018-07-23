@@ -18,6 +18,10 @@
         @Html.DropDownList("客戶分類Id", null, htmlAttributes: new { @class = "form-control", onchange = "this.form.submit();" })
     </div>
 }
+@using (Html.BeginForm("Export", "客戶資料", FormMethod.Post))
+{
+    <input type="submit" value="Export" />
+}
 <table class="table">
     <tr>
         <th>

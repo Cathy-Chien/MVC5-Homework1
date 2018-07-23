@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Homework.Models.客戶聯絡人>
+﻿@model IEnumerable<客戶聯絡人>
 
 @{
     ViewBag.Title = "Index";
@@ -18,6 +18,10 @@
     <div class="form-group">
         @Html.DropDownList("職稱", null, htmlAttributes: new { @class = "form-control", onchange = "this.form.submit();" })
     </div>
+}
+@using (Html.BeginForm("Export", "客戶聯絡人", FormMethod.Post))
+{
+    <input type="submit" value="Export" />
 }
 <table class="table">
     <tr>
@@ -41,7 +45,6 @@
         </th>
         <th></th>
     </tr>
-
     @foreach (var item in Model)
     {
         <tr>
@@ -70,5 +73,4 @@
             </td>
         </tr>
     }
-
 </table>

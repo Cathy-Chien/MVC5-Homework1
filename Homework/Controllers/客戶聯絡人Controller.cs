@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ClosedXML.Excel;
 using Homework.Models;
 
 namespace Homework.Controllers
 {
-    public class 客戶聯絡人Controller : Controller
+    public class 客戶聯絡人Controller : BaseController
     {
         客戶聯絡人Repository contactRepo;
         客戶資料Repository repo;
@@ -19,6 +22,7 @@ namespace Homework.Controllers
             contactRepo = RepositoryHelper.Get客戶聯絡人Repository();
             repo = RepositoryHelper.Get客戶資料Repository(contactRepo.UnitOfWork);
         }
+
 
         //// GET: 客戶聯絡人
         //public ActionResult Index()
@@ -81,6 +85,30 @@ namespace Homework.Controllers
                     break;
             }
             return View(data.Take(10));
+        }
+        [HttpPost]
+        public FileResult Export()
+        {
+            // ClosedXML的用法 先new一個Excel Workbook
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                //取得我要塞入Excel內的資料
+                var data = contactRepo.All().Select(c => new { c.職稱, c.姓名, c.Email, c.手機,c.電話 }).AsQueryable();
+                //一個wrokbook內至少會有一個worksheet,並將資料Insert至這個位於A1這個位置上
+                var ws = wb.Worksheets.Add("客戶聯絡人", 1);
+
+                ws.Cell(1, 1).InsertData(data);
+
+                //因為是用Query的方式,這個地方要用串流的方式來存檔
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    wb.SaveAs(memoryStream);
+                    //請注意 一定要加入這行,不然Excel會是空檔
+                    memoryStream.Seek(0, SeekOrigin.Begin);
+                    //注意Excel的ContentType,是要用這個"application/vnd.ms-excel" 不曉得為什麼網路上有的Excel ContentType超長,xlsx會錯 xls反而不會
+                    return this.File(memoryStream.ToArray(), "application/vnd.ms-excel", "Download.xlsx");
+                }
+            }
         }
 
         [Route("search")]
