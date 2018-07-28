@@ -31,7 +31,7 @@ namespace Homework.Controllers
         //    ViewBag.職稱 = new SelectList(contactRepo.SelectItem(),"ALL");
         //    return View(data.Take(10));
         //}
-
+        [Authorize]
         public ViewResult Index(string sortOrder)
         {
             ViewBag.職稱 = new SelectList(contactRepo.SelectItem(), "ALL");

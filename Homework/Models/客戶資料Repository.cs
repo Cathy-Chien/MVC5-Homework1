@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text;
+using System.Web.Helpers;
 
 namespace Homework.Models
 {
@@ -33,10 +35,28 @@ namespace Homework.Models
 
             return data;
         }
-}
+        public void Update(客戶資料 entity)
+        {
+            entity.密碼 = Crypto.HashPassword(entity.密碼);
+        }
 
-public interface I客戶資料Repository : IRepository<客戶資料>
-{
+        public bool CheckLogin(LoginVM logData)
+        {
+            bool ischeck = false;
+            var 客戶資料 = this.All().FirstOrDefault(p => p.帳號 == logData.帳號);
+            if (客戶資料 != null)
+            {
+                if(Crypto.VerifyHashedPassword(客戶資料.密碼, logData.密碼))
+                {
+                    ischeck = true;
+                }
+            }
+            return ischeck;
+        }
+    }
 
-}
+    public interface I客戶資料Repository : IRepository<客戶資料>
+    {
+
+    }
 }

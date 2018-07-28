@@ -68,7 +68,7 @@ namespace Homework.Controllers
 
         //    return View(data.Take(10));
         //}
-
+        [Authorize]
         public ViewResult Index(string sortOrder)
         {
             ViewBag.客戶分類Id = new SelectList(categoryRepo.SelectItem(), "分類Id", "客戶分類", 0);
@@ -154,6 +154,7 @@ namespace Homework.Controllers
                 }
             }
         }
+        [Authorize]
         public ActionResult Statistics()
         {
             var data = repo.All()
@@ -244,10 +245,11 @@ namespace Homework.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,客戶名稱,統一編號,電話,傳真,地址,Email,客戶分類Id")] 客戶資料 客戶資料)
+        public ActionResult Edit([Bind(Include = "Id,客戶名稱,統一編號,電話,傳真,地址,Email,客戶分類Id,帳號,密碼")] 客戶資料 客戶資料)
         {
             if (ModelState.IsValid)
             {
+                repo.Update(客戶資料);
                 var db = repo.UnitOfWork.Context;
                 db.Entry(客戶資料).State = EntityState.Modified;
                 db.SaveChanges(); ;

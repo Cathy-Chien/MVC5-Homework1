@@ -21,6 +21,8 @@ namespace Homework.Controllers
             bankRepo = RepositoryHelper.Get客戶銀行資訊Repository();
             repo = RepositoryHelper.Get客戶資料Repository(bankRepo.UnitOfWork);
         }
+
+        [Authorize]
         // GET: 客戶銀行資訊
         public ActionResult Index()
         {

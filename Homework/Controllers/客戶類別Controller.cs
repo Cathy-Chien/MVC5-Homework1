@@ -19,7 +19,6 @@ namespace Homework.Controllers
             categoryRepo = RepositoryHelper.Get客戶類別Repository();
         }
 
-
         // GET: 客戶類別
         public ActionResult Index()
         {

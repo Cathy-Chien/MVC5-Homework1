@@ -10,6 +10,7 @@ namespace Homework
         {
             filters.Add(new HandleErrorAttribute());
             filters.Add(new ExcutingTimeAttribute());
+            filters.Add(new BasicAuthAttribute());
         }
     }
 }
